@@ -1,0 +1,1 @@
+# Favoritable Strings

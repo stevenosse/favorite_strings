@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "strings_pageTitle": "Favorite Strings",
+  "strings_allTab_title": "All",
+  "strings_favoritesTab_title": "Favorites",
+  "strings_favoritesTab_emptyList": "Your favorite list is empty"
+}
