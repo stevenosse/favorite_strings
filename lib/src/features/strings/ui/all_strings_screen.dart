@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:favoritable_strings/src/core/i18n/l10n.dart';
 import 'package:favoritable_strings/src/features/strings/logic/all_strings/all_strings_cubit.dart';
 import 'package:favoritable_strings/src/features/strings/logic/all_strings/all_strings_state.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,23 @@ class AllStringsScreen extends StatefulWidget {
 class _AllStringsScreenState extends State<AllStringsScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AllStringsCubit, AllStringsState>(
+    return BlocConsumer<AllStringsCubit, AllStringsState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          idle: (strings) => VoidCallback,
+          itemUnfaved: (item, strings) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('You\'ve removed ${item.string} from your favorites'),
+                action: SnackBarAction(
+                  label: I18n.of(context).undo,
+                  onPressed: () => context.read<AllStringsCubit>().toggleFavorite(item),
+                ),
+              ),
+            );
+          },
+        );
+      },
       builder: (context, state) {
         return ListView.builder(
           itemCount: state.strings.length,
@@ -27,8 +44,7 @@ class _AllStringsScreenState extends State<AllStringsScreen> {
                 Icons.favorite,
                 color: string.isFavorite ? Colors.red : Colors.grey,
               ),
-              onTap: () =>
-                  context.read<AllStringsCubit>().toggleFavorite(string),
+              onTap: () => context.read<AllStringsCubit>().toggleFavorite(string),
             );
           },
         );

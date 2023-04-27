@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "strings_favoritesTab_title":
             MessageLookupByLibrary.simpleMessage("Favorites"),
         "strings_pageTitle":
-            MessageLookupByLibrary.simpleMessage("Favorite Strings")
+            MessageLookupByLibrary.simpleMessage("Favorite Strings"),
+        "undo": MessageLookupByLibrary.simpleMessage("UNDO")
       };
 }

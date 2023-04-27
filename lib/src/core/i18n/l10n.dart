@@ -89,6 +89,16 @@ class I18n {
       args: [],
     );
   }
+
+  /// `UNDO`
+  String get undo {
+    return Intl.message(
+      'UNDO',
+      name: 'undo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<I18n> {

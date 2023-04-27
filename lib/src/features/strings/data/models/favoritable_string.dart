@@ -16,4 +16,11 @@ class FavoritableString extends Equatable {
   String toString() {
     return '{$string, $isFavorite}';
   }
+
+  FavoritableString copyWith({String? string, bool? isFavorite}) {
+    return FavoritableString(
+      string: string ?? this.string,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
 }

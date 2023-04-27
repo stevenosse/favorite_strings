@@ -22,8 +22,7 @@ class FavoritableStringRepository {
 
   void update(String title, bool fav) {
     _localDataSource.update(title, fav);
-    final persisted = _localDataSource.read();
-    _streamController.add(persisted);
+    read();
   }
 
   void dispose() {

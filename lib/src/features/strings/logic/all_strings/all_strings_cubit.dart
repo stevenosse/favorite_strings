@@ -14,18 +14,25 @@ class AllStringsCubit extends Cubit<AllStringsState> {
 
   AllStringsCubit({FavoritableStringRepository? repository})
       : _repository = repository ?? locator<FavoritableStringRepository>(),
-        super(AllStringsState()) {
-    _repository.dataStream.listen(_handleDataReceived);
+        super(AllStringsState.idle()) {
+    _streamSubscription = _repository.dataStream.listen(_handleDataReceived);
   }
 
   void _handleDataReceived(List<FavoritableString> data) {
-    emit(state.copyWith(strings: [...data]));
+    emit(AllStringsState.idle(strings: [...data]));
   }
 
   void getAllStrings() => _repository.read();
 
   void toggleFavorite(FavoritableString string) {
+    /// The update will add the new list of strings to the repo, thus the state will be updated
+    /// then we update the state to tell which item was faved/unfaved
     _repository.update(string.string, !string.isFavorite);
+    if (string.isFavorite) {
+      emit(AllStringsState.itemUnfaved(strings: state.strings, item: string.copyWith(isFavorite: false)));
+    } else {
+      emit(AllStringsState.itemfaved(strings: state.strings, item: string));
+    }
   }
 
   @override
